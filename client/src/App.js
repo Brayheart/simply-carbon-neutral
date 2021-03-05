@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavbarMenu from "./components/NavbarMenu"
@@ -11,6 +11,23 @@ import History from "./pages/History/History"
 import Container from "react-bootstrap/Container"
 
 function App() {
+
+  const [userState, setUserState] = useState({
+    testValue: 1
+  });
+
+  const onSelectionChange = (selection, value) => {
+    switch(selection) {
+      case "testValue":
+        setUserState({ ...userState, testValue: value })
+        break;
+      default:
+        // code block
+    }
+  }
+
+
+
   return (
     <Router>
       <div>
@@ -18,7 +35,10 @@ function App() {
         <Container className="mainContainer">
           <Switch>
             <Route exact path={["/", "/home"]}>
-              <Home />
+              <Home
+                selectionChange={onSelectionChange}
+                stateValues={{userState}}
+              />
             </Route>
             <Route exact path="/login">
               <Login />
